@@ -1,0 +1,22 @@
+{
+  "name": "stripewebstorm-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "stripe-payment.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adaminsky/stripewebstorm-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adaminsky/stripewebstorm-backend/issues"
+  },
+  "homepage": "https://github.com/adaminsky/stripewebstorm-backend#readme",
+  "dependencies": {
+    "firebase": "^4.1.5"
+  }
+}
