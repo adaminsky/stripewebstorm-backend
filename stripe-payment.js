@@ -39,7 +39,7 @@ app.post('/payment', (req,res) => {
       res.writeHead(status, { 'Content-Type': 'text/html' });
       return res.end('<h1>' + message + '</h1>');
     });
-  })
+  });
 });
 
 // comment this to disable the test form
