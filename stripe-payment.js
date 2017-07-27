@@ -23,6 +23,7 @@ app.post('/payment', (req,res) => {
   }).then(
     function(customer) {
       //save customer object somewhere
+      console.log(customer.id);
       
       //charge customer
       stripe(STRIPE_SECRET_KEY).charges.create({
@@ -30,35 +31,15 @@ app.post('/payment', (req,res) => {
         currency: req.query.currency,
         description: req.query.description,
         customer: customer.id,
-    }, 
-    /*function(err) {
-      switch(err.type) {
-        case 'StripeCardError':
-          console.log("Card was declined");
-          break;
-        case 'RateLimitError':
-          console.log("Too many requests made to API too quickly");
-          break;
-        case 'StripeInvalidRequestError':
-          console.log("Invalid parameters supplied to Stripe's API");
-          break;
-        case 'StripeAPIError':
-          console.log("error occured internally with Stripe API");
-          break;
-        case 'StripeConnectionError':
-          console.log("error occured during HTTPS communication");
-          break;
-        case 'StripeAuthenticationError':
-          console.log("incorrect API key used");
-          break;
-        default:
-          console.log("Unidentified error");
-          break;
-      }
-    },*/
+      },
+      (err, charge) => {
 
-    (err, charge) => {
-
+      const status = err ? 400 : 200;
+      const message = err ? err.message : 'Payment done!';
+      res.writeHead(status, { 'Content-Type': 'text/html' });
+      return res.end('<h1>' + message + '</h1>');
+    });
+  }).then(function(err){
        switch(err.type) {
         case 'StripeCardError':
           console.log("Card was declined");
@@ -82,12 +63,6 @@ app.post('/payment', (req,res) => {
           console.log("Unidentified error");
           break;
       }
-
-      const status = err ? 400 : 200;
-      const message = err ? err.message : 'Payment done!';
-      res.writeHead(status, { 'Content-Type': 'text/html' });
-      return res.end('<h1>' + message + '</h1>');
-    });
   })
 });
 
