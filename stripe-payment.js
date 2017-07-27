@@ -4,19 +4,6 @@ import express from 'express';
 import { fromExpress } from 'webtask-tools';
 import bodyParser from 'body-parser';
 import stripe from 'stripe';
-import firebase from 'firebase';
-
-var config = {
-    apiKey: "AIzaSyAI0hjtt6DpgtboWpyOcWsh_Xn6BxVYjMY",
-    authDomain: "bobago-c7da5.firebaseapp.com",
-    databaseURL: "https://bobago-c7da5.firebaseio.com",
-    projectId: "bobago-c7da5",
-    Storagebucket: "bobago-c7da5.appspot.com",
-    messagingSenderId: "246035056974"
-};
-firebase.initializeApp(config);
-
-var database = firebase.database();
 
 bodyParser.urlencoded();
 
@@ -37,7 +24,6 @@ app.post('/payment', (req,res) => {
       //save customer object somewhere
       print("hi");
       console.log(customer.id);
-      database.ref().child("Customer ID").child(customer.email).set(customer.id);
       
       //charge customer
       stripe(STRIPE_SECRET_KEY).charges.create({
