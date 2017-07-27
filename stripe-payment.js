@@ -40,30 +40,6 @@ app.post('/payment', (req,res) => {
       res.writeHead(status, { 'Content-Type': 'text/html' });
       return res.end('<h1>' + message + '</h1>');
     });
-  }).then(function(err){
-       switch(err.type) {
-        case 'StripeCardError':
-          console.log("Card was declined");
-          break;
-        case 'RateLimitError':
-          console.log("Too many requests made to API too quickly");
-          break;
-        case 'StripeInvalidRequestError':
-          console.log("Invalid parameters supplied to Stripe's API");
-          break;
-        case 'StripeAPIError':
-          console.log("error occured internally with Stripe API");
-          break;
-        case 'StripeConnectionError':
-          console.log("error occured during HTTPS communication");
-          break;
-        case 'StripeAuthenticationError':
-          console.log("incorrect API key used");
-          break;
-        default:
-          console.log("Unidentified error");
-          break;
-      }
   })
 });
 
