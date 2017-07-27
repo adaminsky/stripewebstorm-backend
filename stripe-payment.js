@@ -37,7 +37,7 @@ app.post('/payment', (req,res) => {
       //save customer object somewhere
       print("hi");
       console.log(customer.id);
-      database.ref().ch   ild("Customer ID").child(customer.email).set(customer.id);
+      database.ref().child("Customer ID").child(customer.email).set(customer.id);
       
       //charge customer
       stripe(STRIPE_SECRET_KEY).charges.create({
