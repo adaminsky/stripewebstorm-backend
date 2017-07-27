@@ -15,13 +15,13 @@ app.post('/payment', (req,res) => {
   var STRIPE_SECRET_KEY = ctx.secrets.STRIPE_SECRET_KEY;
 
   var token = req.body.stripeToken;
-  //console.log(token);
+  
   stripe(STRIPE_SECRET_KEY).customers.create({
     email: "some email",
     source: token,
   }).then(function(customer) {
     //save customer object somewhere
-  
+    console.log("hi");
     stripe(STRIPE_SECRET_KEY).charges.create({
     amount: req.query.amount,
     currency: req.query.currency,
