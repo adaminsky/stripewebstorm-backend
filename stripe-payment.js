@@ -16,18 +16,24 @@ app.post('/payment', (req,res) => {
 
  var token = req.body.stripeToken;
 
+ stripe(STRIPE_SECRET_KEY).customers.create({
+  email: "some email",
+  source: token,
+ }).then(function(customer) {
+    //save customer
 
-  stripe(STRIPE_SECRET_KEY).charges.create({
-    amount: req.query.amount,
-    currency: req.query.currency,
-    source: req.body.stripeToken, 
-    description: req.query.description
-  }, (err, charge) => {
+    stripe(STRIPE_SECRET_KEY).charges.create({
+      amount: req.query.amount,
+      currency: req.query.currency,
+      description: req.query.description,
+      customer: customer.id,
+ }, (err, charge) => {
     const status = err ? 400 : 200;
     const message = err ? err.message : 'Payment done!';
     res.writeHead(status, { 'Content-Type': 'text/html' });
     return res.end('<h1>' + message + '</h1>');
   });
+});
 });
 
 // comment this to disable the test form
