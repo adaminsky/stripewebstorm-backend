@@ -28,7 +28,20 @@ app.post('/payment', (req,res) => {
       currency: req.query.currency,
       description: req.query.description,
       customer: customer.id,
- }, (err, charge) => {
+ }, 
+
+    function(err) {
+      switch(err.type) {
+        case'StripeCardError':
+          console.log("hi");
+          break;
+        default:
+          console.log("hi");
+          break;
+      }
+    }
+
+  (err, charge) => {
     const status = err ? 400 : 200;
     const message = err ? err.message : 'Payment done!';
     res.writeHead(status, { 'Content-Type': 'text/html' });
