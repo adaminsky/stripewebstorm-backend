@@ -31,7 +31,7 @@ app.post('/payment', (req,res) => {
         description: req.query.description,
         customer: customer.id,
     }, 
-    function(err) {
+    /*function(err) {
       switch(err.type) {
         case 'StripeCardError':
           console.log("Card was declined");
@@ -55,7 +55,7 @@ app.post('/payment', (req,res) => {
           console.log("Unidentified error");
           break;
       }
-    },
+    },*/
 
     (err, charge) => {
       const status = err ? 400 : 200;
