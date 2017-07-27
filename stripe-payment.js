@@ -23,7 +23,7 @@ app.post('/payment', (req,res) => {
   }).then(
     function(customer) {
       //save customer object somewhere
-      console.log("hi");
+      print("hi");
       console.log(customer.id);
       
       //charge customer
