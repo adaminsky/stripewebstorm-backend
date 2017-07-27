@@ -15,7 +15,7 @@ app.post('/payment', (req,res) => {
   var STRIPE_SECRET_KEY = ctx.secrets.STRIPE_SECRET_KEY;
 
   var token = req.body.stripeToken;
-  console.log(token);
+  //console.log(token);
   stripe(STRIPE_SECRET_KEY).customers.create({
     email: "some email",
     source: token,
@@ -25,8 +25,8 @@ app.post('/payment', (req,res) => {
     stripe(STRIPE_SECRET_KEY).charges.create({
     amount: req.query.amount,
     currency: req.query.currency,
-    source: token,
-    description: req.query.description
+    description: req.query.description,
+    customer: customer.id,
   }, (err, charge) => {
     const status = err ? 400 : 200;
     const message = err ? err.message : 'Payment done!';
