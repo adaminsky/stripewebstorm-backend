@@ -51,8 +51,9 @@ app.get('/', (req, res) => {
 
 function renderView(ctx) {
   //change /stripe-payment below to your task name
-  return `
-  <form action="/stripe-payment/payment?currency=USD&amount=2000&description=Test%20item" method="POST">
+  return `*
+  <form ac+
+  tion="/stripe-payment/payment?currency=USD&amount=2000&description=Test%20item" method="POST">
     <script
       src="https://checkout.stripe.com/checkout.js" class="stripe-button"
       data-key="${ctx.secrets.STRIPE_PUBLISHABLE_KEY}"
