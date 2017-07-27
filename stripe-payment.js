@@ -25,6 +25,7 @@ app.post('/payment', (req,res) => {
     amount: req.query.amount,
     currency: req.query.currency,
     description: req.query.description
+    customer: customer.id,
   }, (err, charge) => {
     const status = err ? 400 : 200;
     const message = err ? err.message : 'Payment done!';
