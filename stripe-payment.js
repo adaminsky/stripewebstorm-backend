@@ -25,7 +25,7 @@ app.post('/payment', (req,res) => {
     stripe(STRIPE_SECRET_KEY).charges.create({
     amount: req.query.amount,
     currency: req.query.currency,
-    source: req.body.stripeToken, 
+    source: token,
     description: req.query.description
   }, (err, charge) => {
     const status = err ? 400 : 200;
