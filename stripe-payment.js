@@ -18,7 +18,7 @@ app.post('/payment', (req,res) => {
   var token = req.body.stripeToken;
   
   stripe(STRIPE_SECRET_KEY).customers.create({
-    email: "some email",
+    //email: "some email",
     source: token,
   }).then(
     function(customer) {
