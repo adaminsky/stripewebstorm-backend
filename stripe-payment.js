@@ -14,10 +14,14 @@ app.post('/payment', (req,res) => {
   var ctx = req.webtaskContext;
   var STRIPE_SECRET_KEY = ctx.secrets.STRIPE_SECRET_KEY;
 
- var token = req.body.stripeToken;
-
-
-  stripe(STRIPE_SECRET_KEY).charges.create({
+  var token = req.body.stripeToken;
+  stripe(STRIPE_SECRET_KEY).customers.create({
+    email: "some email",
+    source: token,
+  }).then(function(customer) {
+    //save customer object somewhere
+  
+    stripe(STRIPE_SECRET_KEY).charges.create({
     amount: req.query.amount,
     currency: req.query.currency,
     source: req.body.stripeToken, 
@@ -28,6 +32,7 @@ app.post('/payment', (req,res) => {
     res.writeHead(status, { 'Content-Type': 'text/html' });
     return res.end('<h1>' + message + '</h1>');
   });
+  })
 });
 
 // comment this to disable the test form
