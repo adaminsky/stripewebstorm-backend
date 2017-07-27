@@ -29,29 +29,7 @@ app.post('/payment', (req,res) => {
       customer: customer.id,
  }, (err, charge) => {
     
-    switch(err.type) {
-                 case 'StripeCardError':
-                     console.log("Card was declined");
-                     break;
-                 case 'RateLimitError':
-                     console.log("Too many requests made to API too quickly");
-                     break;
-                 case 'StripeInvalidRequestError':
-                     console.log("Invalid parameters supplied to Stripe's API");
-                     break;
-                 case 'StripeAPIError':
-                     console.log("error occured internally with Stripe API");
-                     break;
-                 case 'StripeConnectionError':
-                     console.log("error occured during HTTPS communication");
-                     break;
-                 case 'StripeAuthenticationError':
-                    console.log("incorrect API key used");
-                     break;
-                 default:
-                     console.log("Unidentified error");
-                     break;
-                 }
+    
 
     const status = err ? 400 : 200;
     const message = err ? err.message : 'Payment done!';
