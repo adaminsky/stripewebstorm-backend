@@ -4,6 +4,7 @@ import express from 'express';
 import { fromExpress } from 'webtask-tools';
 import bodyParser from 'body-parser';
 import stripe from 'stripe';
+import firebase from 'firebase';
 
 bodyParser.urlencoded();
 
@@ -20,19 +21,20 @@ app.post('/payment', (req,res) => {
     email: "some email",
     source: token,
   }).then(function(customer) {
-    //save customer object somewhere
-    console.log("hi");
-    stripe(STRIPE_SECRET_KEY).charges.create({
-    amount: req.query.amount,
-    currency: req.query.currency,
-    description: req.query.description,
-    customer: customer.id,
+      //save customer object somewhere
+      
+      //charge customer
+      stripe(STRIPE_SECRET_KEY).charges.create({
+        amount: req.query.amount,
+        currency: req.query.currency,
+        description: req.query.description,
+        customer: customer.id,
   }, (err, charge) => {
     const status = err ? 400 : 200;
     const message = err ? err.message : 'Payment done!';
     res.writeHead(status, { 'Content-Type': 'text/html' });
     return res.end('<h1>' + message + '</h1>');
-  });
+    });
   })
 });
 
