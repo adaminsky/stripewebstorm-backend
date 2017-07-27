@@ -15,6 +15,7 @@ app.post('/payment', (req,res) => {
   var STRIPE_SECRET_KEY = ctx.secrets.STRIPE_SECRET_KEY;
 
   var token = req.body.stripeToken;
+  console.log(token);
   stripe(STRIPE_SECRET_KEY).customers.create({
     email: "some email",
     source: token,
