@@ -20,7 +20,8 @@ app.post('/payment', (req,res) => {
   stripe(STRIPE_SECRET_KEY).customers.create({
     email: "some email",
     source: token,
-  }).then(function(customer) {
+  }).then(
+    function(customer) {
       //save customer object somewhere
       
       //charge customer
@@ -29,11 +30,38 @@ app.post('/payment', (req,res) => {
         currency: req.query.currency,
         description: req.query.description,
         customer: customer.id,
-  }, (err, charge) => {
-    const status = err ? 400 : 200;
-    const message = err ? err.message : 'Payment done!';
-    res.writeHead(status, { 'Content-Type': 'text/html' });
-    return res.end('<h1>' + message + '</h1>');
+    }, 
+    function(err) {
+      switch(err.type) {
+        case 'StripeCardError':
+          console.log("Card was declined");
+          break;
+        case 'RateLimitError':
+          console.log("Too many requests made to API too quickly");
+          break;
+        case 'StripeInvalidRequestError':
+          console.log("Invalid parameters supplied to Stripe's API");
+          break;
+        case 'StripeAPIError':
+          console.log("error occured internally with Stripe API");
+          break;
+        case 'StripeConnectionError':
+          console.log("error occured during HTTPS communication");
+          break;
+        case 'StripeAuthenticationError':
+          console.log("incorrect API key used");
+          break;
+        default:
+          console.log("Unidentified error");
+          break;
+      }
+    },
+
+    (err, charge) => {
+      const status = err ? 400 : 200;
+      const message = err ? err.message : 'Payment done!';
+      res.writeHead(status, { 'Content-Type': 'text/html' });
+      return res.end('<h1>' + message + '</h1>');
     });
   })
 });
