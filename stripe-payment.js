@@ -10,6 +10,7 @@ bodyParser.urlencoded();
 var app = express();
 app.use(bodyParser.urlencoded());
 
+
 app.post('/payment', (req,res) => {
   var ctx = req.webtaskContext;
   var STRIPE_SECRET_KEY = ctx.secrets.STRIPE_SECRET_KEY;
@@ -28,15 +29,12 @@ app.post('/payment', (req,res) => {
       description: req.query.description,
       customer: customer.id,
  }, (err, charge) => {
-    
-    
-
     const status = err ? 400 : 200;
     const message = err ? err.message : 'Payment done!';
     res.writeHead(status, { 'Content-Type': 'text/html' });
     return res.end('<h1>' + message + '</h1>');
+    });
   });
-});
 });
 
 // comment this to disable the test form
