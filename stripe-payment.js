@@ -14,6 +14,9 @@ app.post('/payment', (req,res) => {
   var ctx = req.webtaskContext;
   var STRIPE_SECRET_KEY = ctx.secrets.STRIPE_SECRET_KEY;
 
+ var token = req.body.stripeToken;
+
+
   stripe(STRIPE_SECRET_KEY).charges.create({
     amount: req.query.amount,
     currency: req.query.currency,
