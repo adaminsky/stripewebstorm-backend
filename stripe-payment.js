@@ -4,7 +4,8 @@ import express from 'express';
 import { fromExpress } from 'webtask-tools';
 import bodyParser from 'body-parser';
 import stripe from 'stripe';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
+import { firebaseConfig } from './config';
 
 var config = {
     apiKey: "AIzaSyAI0hjtt6DpgtboWpyOcWsh_Xn6BxVYjMY",
