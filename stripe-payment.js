@@ -5,6 +5,7 @@ import { fromExpress } from 'webtask-tools';
 import bodyParser from 'body-parser';
 import stripe from 'stripe';
 var firebase = require('firebase');
+console.log(firebase);
 
 
 var config = {
