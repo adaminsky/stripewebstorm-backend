@@ -16,6 +16,8 @@ var config = {
 };
 firebase.initializeApp(config);
 
+var database = firebase.database();
+
 bodyParser.urlencoded();
 
 var app = express();
@@ -34,7 +36,6 @@ app.post('/payment', (req,res) => {
  }).then(function(customer) {
     //save customer
      database.ref().child("Customer ID").child(customer.email).set(customer.id);
-
 
     stripe(STRIPE_SECRET_KEY).charges.create({
       amount: req.query.amount,
