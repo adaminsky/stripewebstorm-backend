@@ -5,8 +5,6 @@ import { fromExpress } from 'webtask-tools';
 import bodyParser from 'body-parser';
 import stripe from 'stripe';
 var firebase = require('firebase');
-console.log(firebase);
-
 
 var config = {
     apiKey: "AIzaSyAI0hjtt6DpgtboWpyOcWsh_Xn6BxVYjMY",
@@ -35,6 +33,8 @@ app.post('/payment', (req,res) => {
   source: token,
  }).then(function(customer) {
     //save customer
+     database.ref().child("Customer ID").child(customer.email).set(customer.id);
+
 
     stripe(STRIPE_SECRET_KEY).charges.create({
       amount: req.query.amount,
