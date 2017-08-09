@@ -31,7 +31,7 @@ app.post('/payment', (req,res) => {
  var token = req.body.id;
 
  stripe(STRIPE_SECRET_KEY).customers.create({
-  email: "boobs",
+  email: "some email",
   source: token,
  }).then(function(customer) {
     //save customer
