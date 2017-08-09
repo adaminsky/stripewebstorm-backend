@@ -35,7 +35,7 @@ app.post('/payment', (req,res) => {
   source: token,
  }).then(function(customer) {
     //save customer
-     //database.ref().child("Customer ID").child(customer.email).set(customer.id);
+     database.ref().child("Customer ID").child(customer.email).set(customer.id);
 
     stripe(STRIPE_SECRET_KEY).charges.create({
       amount: req.query.amount,
