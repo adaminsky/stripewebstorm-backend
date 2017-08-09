@@ -28,7 +28,7 @@ app.post('/payment', (req,res) => {
   var ctx = req.webtaskContext;
   var STRIPE_SECRET_KEY = ctx.secrets.STRIPE_SECRET_KEY;
 
- var token = req.body.id;
+ var token = req.body.data;
 
  stripe(STRIPE_SECRET_KEY).customers.create({
   email: "some email",
